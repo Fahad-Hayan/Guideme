@@ -1,0 +1,20 @@
+{% load static %}
+
+<!--CSS Ststic files-->
+
+<link href="{% static 'css/owl.theme.default.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/owl.carousel.min.css' %}" rel="stylesheet">
+<link href= "{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+<!--Body content-->
+{% include 'parts/navbar.html' %}
+{% block content %}
+{% endblock content %}
+{% include 'parts/footer.html' %}
+
+<!--JavaScript Ststic files-->
+<script src="{% static 'js/jquery-3.6.1.min.js' %}"></script>
+<script src="{% static 'js/owl.carousel.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+<script src="{% static 'js/script.js' %}"></script>
