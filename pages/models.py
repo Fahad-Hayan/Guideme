@@ -34,7 +34,7 @@ class Country(models.Model):
         return self.name
 
 class City(models.Model):
-    catigories=[
+    categories=[
         ('Not Specified', 'Not Specified'),
         ('Leisure Tourism','Leisure Tourism'),
         ('Archaeological Tourism','Archaeological Tourism'),
@@ -47,7 +47,7 @@ class City(models.Model):
     exchangeRate = models.DecimalField(max_digits=6,decimal_places=2, verbose_name='Exchage Rate')
     rating = models.DecimalField(max_digits=2,decimal_places=1, verbose_name='Rating')
     activeState = models.BooleanField(default=True, verbose_name='Active State')
-    catigory = models.CharField(max_length= 22, choices= catigories, null=True, blank=True)
+    category = models.CharField(max_length= 22, choices= categories, null=True, blank=True)
     class Meta:
         verbose_name = 'City'
         verbose_name_plural = 'Cities'

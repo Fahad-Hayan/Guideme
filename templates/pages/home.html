@@ -3,9 +3,9 @@
 {% block content %}
     <!--Hero-->
 
-    <section id="hero" class="bg-dark text-light text-center text-sm-start">
-        <div class="container my-auto">
-            <div class="d-sm-flex align-items-center justify-content-center">
+    <section id="hero" class="bg-dark text-light text-center text-lg-start">
+        <div class="container sticky-top" style="padding-bottom:20vh ; width:fit-content">
+            <div class="d-md-flex align-items-center justify-content-center">
                 <div class="py-3 px-3">
                     <h2>Explore the world with Guideme</h2>
 
@@ -24,28 +24,48 @@
     <!--Content-->
     <section id="content">
         <div class="px-5 my-3">
-            {% for catigory in catigories %}
-            <h3>{{catigory}}</h3>
+            <!--Countries-->
+            <h3>Countries</h3>
+            <div class="owl-carousel">
+                {% for country in Countries %}
+                <div class="card text-light p-0" id="{{country.name}}">
+                    <a href="#details.html">
+                        <img data-src="{{country.image.url}}" alt="{{country.name}}" class="card-img-top owl-lazy">
+                        <div class="card-body">
+                            <h4 class="card-title">{{country.name}}</h4>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+            <hr>
+            <!--Cities Cards-->
+            {% for category in categories %}
+            <h3>{{category}} {% if category == 'Most Rated' %} Cities{% endif %}</h3>
+            <div class="mx-1 mt-3 clearfix">
+                <a class="float-end" href="#">see more></a>
+            </div>
+            
             <div class="owl-carousel">
                 {% for city in cities %}
-                {% if city.catigory == catigory or catigory == 'Most Rated'%}
-                <div class="card  text-light p-0" id="{{city.name}}">
+                {% if city.category == category or category == 'Most Rated'%}
+                <div class="card text-light p-0" id="{{city.name}}">
                     <a href="#details.html">
                         <img data-src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top owl-lazy">
                         <div class="card-body">
-                            <container class="badge-container">
-                                <div class="badge">{{city.catigory}}</div>
-                            </container>
-                            <h4 class="card-title">{{city.name}}</h4>
+                            <div class="badge-container">
+                                <div class="badge">{{city.category}}</div>
+                            </div>
+                            <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
                             <p class="card-text">{{city.caption}}</p>
-                            <p id="exchange-text">USD exchange rate: {{city.exchangeRate}} USD</p>
+                            <p id="exchange-text">USD exchange rate: ${{city.exchangeRate}}</p>
                             <p id="rating-text"><img src="{% static 'img/Icons/star-filled.svg' %}"
                             id="star-icon" class="d-inline"> {{city.rating}}</p>
                         </div>
                     </a>
                     <button type="button" class="btn favorite-btn"> <img id="{{city.name}}-Ficon"
                             data-src="{% static 'img/Icons/Favorite-outlined.svg' %}" class="owl-lazy"
-                            onclick="{iconChange('{{city.name}}-Ficon')}"></button>
+                            onclick="iconChange('{{city.name}}-Ficon')"></button>
                 </div>
                 {% endif %}
                 {% endfor %}

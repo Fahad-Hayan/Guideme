@@ -5,17 +5,18 @@ from django.http import HttpResponse
 
 def home(request):
     return render(request, 'pages/home.html',{
-        'cities' : City.objects.all().exclude(catigory='Not Specified'),
-        'catigories': [
+        'cities' : City.objects.all().exclude(category='Not Specified')[:10],
+        'categories': [
         'Most Rated',
         'Leisure Tourism',
         'Archaeological Tourism',
         'Religious Tourism',
     ],
+    'Countries' : Country.objects.all()
     })
 
-def destinations(request):
-    return render(request, 'pages/destinations.html')
+def categories(request):
+    return render(request, 'pages/categories.html')
 
 def wishlist(request):
     return render(request, 'pages/wishlist.html')
