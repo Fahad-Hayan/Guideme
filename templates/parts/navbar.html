@@ -3,7 +3,7 @@
 
 <div class="navbar navbar-expand-md navbar-dark text-white" id="navbar">
     <div class="container">
-        <a href="#" class="navbar-brand">
+        <a href="{% url 'home' %}" class="navbar-brand">
             <h1 class="display-6">Guideme</h1>
         </a>
 
@@ -16,7 +16,15 @@
                 <li class="nav-item"><a href="{% url 'categories' %}" class="nav-link">Categories</a></li>
                 <li class="nav-item"><a href="{% url 'wishlist' %}" class="nav-link">Wishlist</a></li>
                 <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-                <li class="nav-item" id="login-link"><a href="{% url 'registration' %}" class="nav-link text-light">Login</a></li>
+
+                {% if user.is_authenticated %}
+                    <h3>Hello, {{firstname}}</h3>
+                    <li class="nav-item" id="login-link"><a href="{% url 'signout' %}" class="nav-link text-light">Logout</a><img src="{% static 'img\illustrations\avatar-placeholder.svg' %}" height="50px" alt="avatar" class="d-inline"></li>
+                    
+                {% else %}
+                    <li class="nav-item" id="login-link"><a href="{% url 'signin' %}" class="nav-link text-light">Sign in</a></li>
+                {% endif %}
+                
             </ul>
         </div>
     </div>

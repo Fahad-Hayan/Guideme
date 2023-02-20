@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+
+<!-- Login Form -->
+<div class="container">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-lg-4 col-md-6 col-sm-6">
+            <div class="card shadow">
+                <div class="card-title text-center border-bottom">
+                    <h2 class="p-3">Sign up</h2>
+                </div>
+                <div class="card-body">
+                    <form action=" {% url 'signup' %} " method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <div class="col">
+                                <label for="firstname" class="form-label">First Name</label>
+                                <input type="text" class="form-control" id="firstname" name="firstname" required>
+                            </div>
+                            <div class="col">
+                                <label for="lastname" class="form-label">Last Name</label>
+                                <input type="text" class="form-control" id="lastname" name="lastname" required>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <label for="password" class="form-label">Password</label>
+                        <div class="input-group mb-4">
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <span class="input-group-text" id="basic-addon1">
+                                <a onclick="passwordVisibility()" id="passEye-button"><img src="{% static 'img//Icons/closed-eye.svg' %}" id="pass-eye"></a>
+                            </span>
+                        </div>
+                        {% for message in messages %}
+                            <p>{{message}}</p>
+                        {% endfor %}
+                        <div class="d-grid mb-2">
+                            <button type="submit" class="btn text-light main-bg">Sign up</button>
+                        </div>
+                        <label>Already have an account? </label>
+                        <a href="{% url 'signin' %}">Sign in</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

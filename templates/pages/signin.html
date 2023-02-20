@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<!-- Example Code -->
+    {% for message in messages %}
+        <p>{{message}}</p>
+    {% endfor %}
+    <!-- Login Form -->
+    <div class="container">
+        <div class="row justify-content-center mt-5 mb-5">
+            <div class="col-lg-4 col-md-6 col-sm-6">
+                <div class="card shadow">
+                    <div class="card-title text-center border-bottom">
+                        <h2 class="p-3">Sign in</h2>
+                    </div>
+                    <div class="card-body">
+                        <form action=" {% url 'signin' %} " method="POST">
+                            {% csrf_token %}
+                            <div class="mb-4">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username" required>
+                            </div>
+                            <div class="input-group mb-4">
+                                <input type="password" class="form-control" id="password" name="password" required>
+                                <span class="input-group-text" id="basic-addon1">
+                                    <a onclick="passwordVisibility()" id="passEye-button"><img src="{% static 'img//Icons/closed-eye.svg' %}" id="pass-eye"></a>
+                                </span>
+                            </div>
+                            <div>
+                                <input type="checkbox" class="form-check-input" id="remember" />
+                                <label for="remember" class="form-label">Remember Me</label>
+                            </div>
+                            <div class="mb-4">
+                                <a href="#">Forgot Password?</a>
+                            </div>
+                            
+                            <div class="d-grid mb-2">
+                                <button type="submit" class="btn text-light main-bg">Sign in</button>
+                            </div>
+                            <label>Don't have an account? </label>
+                            <a href="{% url 'signup' %}">Sign up</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- <form class="position-absolute top-50 start-50 translate-middle">
+        <img src="{% static 'img//Illustrations/avatar-placeholder.svg' %}" style="width: 100px;" alt="Avatar" />
+        <div class="container mt-5 mb-5">
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" placeholder="Username" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">*</span>
+                <input type="password" class="form-control" placeholder="Password" aria-label="Username"
+                    aria-describedby="basic-addon1">
+            </div>
+            <button type="submit" class="btn btn-dark">Sign in</button><br>
+            <a href="#">Forgot Password?</a><br>
+            Don't have an account? <a href="{% url 'signup' %}">Sign up</a>
+        </div>
+    </form> -->
+
+
+<!-- End Example Code -->
+
+{% endblock content %}
