@@ -1,4 +1,4 @@
-// hide navbar when scroll down
+// hide navbar when scroll down using jQuery
 $(document).ready(function () {
     var prevScrollpos = window.pageYOffset;
     window.onscroll = function () {
@@ -14,12 +14,14 @@ $(document).ready(function () {
 
 function toggleFavorite(cityName) {
     // get the image element of the favorite button
-    var img = document.getElementById(cityName + 'F-icon');
-
-    if (img.getAttribute('src') === "/static/img/Icons/Favorite-outlined.svg") {
-        img.setAttribute('src', "/static/img/Icons/Favorite-filled.svg");
-    } else {
-        img.setAttribute('src', "/static/img/Icons/Favorite-outlined.svg");
+    var favIcon = document.getElementsByClassName(cityName + 'F-icon');
+    for(var i=0; i<favIcon.length;i++)
+    {
+        if (favIcon.item(i).getAttribute('src') === "/static/img/Icons/Favorite-outlined.svg") {
+            favIcon.item(i).setAttribute('src', "/static/img/Icons/Favorite-filled.svg");
+        } else {
+            favIcon.item(i).setAttribute('src', "/static/img/Icons/Favorite-outlined.svg");
+        } 
     }
 }
 

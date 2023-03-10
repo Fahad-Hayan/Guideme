@@ -70,5 +70,5 @@ class City(models.Model):
         verbose_name_plural = 'Cities'
         ordering = ['-rating'] 
         
-        def __str__(self):
-            return self.name
+    def __str__(self):
+        return self.name

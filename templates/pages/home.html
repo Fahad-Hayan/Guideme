@@ -4,7 +4,7 @@
 <!--Hero-->
 
 <section id="hero" class="bg-dark text-light text-center text-lg-start">
-    <div class="container sticky-top" style="padding-bottom:20vh ; width:fit-content">
+    <div class="container sticky-top" style="padding-bottom:21vh ; width:fit-content">
         <div class="d-md-flex align-items-center justify-content-center">
             <div class="py-3 px-3">
                 <h2>Explore the world with Guideme</h2>
@@ -26,15 +26,15 @@
     <div class="px-5 my-3">
         <!--Countries-->
         <div class="heading-link mx-2 mt-3">
-            <h3><a href="#">Countries</a></h3>
+            <h3><a href="countries" class="text-decoration-underline">Countries</a></h3>
         </div>
         <div class="owl-carousel">
             {% for country in Countries %}
             <div class="card text-light p-0" id="{{country.name}}">
-                <a href="#details.html">
+                <a href="countries/{{country.id}}">
                     <img data-src="{{country.image.url}}" alt="{{country.name}}" class="card-img-top owl-lazy">
                     <div class="card-body">
-                        <h4 class="card-title">{{country.name}}</h4>
+                        <h4 class="card-title text-center">{{country.name}}</h4>
                     </div>
                 </a>
             </div>
@@ -44,7 +44,7 @@
         <!--Cities Cards-->
         {% for category in categories %}
         <div class="heading-link mx-2 mt-3">
-            <h3><a href="#">{{category}} {% if category == 'Most Rated' %} Cities{% endif %}</a></h3>
+            <h3><a href="#" class="text-decoration-underline">{{category}} {% if category == 'Most Rated' %} Cities{% endif %}</a></h3>
         </div>
 
         <!-- <div class="mx-1 mt-3 clearfix">
@@ -68,7 +68,7 @@
                                 class="d-inline"> {{city.rating}}</p>
                     </div>
                 </a>
-                <button type="button" id="favorite-btn"> <img id="{{city.name}}F-icon"
+                <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
                         src="{% static 'img/Icons/Favorite-outlined.svg' %}"
                         onclick="toggleFavorite('{{city.name}}')"></button>
             </div>

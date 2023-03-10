@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<div class="container padding">
+        {% if country %}
+        {% for city in cities %}
+        {% if country == city.country %}
+        <div class="column">
+            <div class="card text-light p-0" id="{{city.name}}">
+                <a href="{% url 'details' %}" onclick="">
+                    <img src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top">
+                    <div class="card-body">
+                        <div class="badge-container">
+                            <div class="badge">{{city.category}}</div>
+                        </div>
+                        <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
+                        <p class="card-text">{{city.caption}}</p>
+                        <p id="exchange-text">USD exchange rate: ${{city.exchangeRate}}</p>
+                        <p id="rating-text"><img src="{% static 'img/Icons/star-filled.svg' %}" id="star-icon"
+                                class="d-inline">
+                            {{city.rating}}</p>
+                    </div>
+                </a>
+                <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
+                        src="{% static 'img/Icons/Favorite-outlined.svg' %}"
+                        onclick="toggleFavorite('{{city.name}}')"></button>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    {% else %}
+    <div class="container text-center">
+        <div class="row">
+            {% for count in countries %}
+            <div class="column">
+                <div class="card text-light p-0" id="{{count.name}}">
+                    <a href="countries/{{count.id}}">
+                        <img src="{{count.image.url}}" alt="{{count.name}}" class="card-img-top">
+                        <div class="card-body">
+                            <h4 class="card-title">{{count.name}}</h4>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+
+{% endblock content %}

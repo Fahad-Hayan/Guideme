@@ -1,4 +1,44 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
+
+<div class="row">
+    <div class="column">
+        <div class="card">
+            <img src="{% static 'img/Pictures/Fahad.jpg' %}" alt="Fahad" class="about-img">
+            <div class="container">
+                <h2>Fahad Hayan</h2>
+                <h5>Team Leader</h5>
+                <p>Website Developer & Designer</p>
+                <p>fahad.hayan.aljashaam@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <img src="{% static 'img/Pictures/Nariman.jpg' %}" alt="Nariman" class="about-img">
+            <div class="container">
+                <h2>Nariman Ali</h2>
+                <h5>Theoretical project coordinator</h5>
+                <p>Writer & Researcher</p>
+                <p>example@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+            </div>
+        </div>
+    </div>
+    <div class="column">
+        <div class="card">
+            <img src="{% static 'img/Pictures/Ahmed.jpg' %}" alt="Ahmed" class="about-img">
+            <div class="container">
+                <h2>Ahmed Nazar</h2>
+                <h5>Theoretical project reviewer</h5>
+                <p>Writer & Researcher</p>
+                <p>example@gmail.com</p>
+                <p><button class="button">Contact</button></p>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock content %}

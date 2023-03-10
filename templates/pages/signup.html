@@ -3,7 +3,7 @@
 {% block content %}
 
 <!-- Login Form -->
-<div class="container">
+<div class="container padding">
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-lg-4 col-md-6 col-sm-6">
             <div class="card shadow">
@@ -39,7 +39,9 @@
                             </span>
                         </div>
                         {% for message in messages %}
-                            <p>{{message}}</p>
+                        <div class="alert alert-danger" role="alert">
+                            {{message}}
+                        </div>
                         {% endfor %}
                         <div class="d-grid mb-2">
                             <button type="submit" class="btn text-light main-bg">Sign up</button>

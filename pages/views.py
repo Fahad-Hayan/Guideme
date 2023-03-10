@@ -1,17 +1,17 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.core.mail import EmailMessage, send_mail
-from Guideme import settings
-from django.contrib.sites.shortcuts import get_current_site
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import authenticate, login, logout
 from .models import Country, City
+# from django.http import HttpResponse
+# from django.core.mail import EmailMessage, send_mail
+# from Guideme import settings
+# from django.contrib.sites.shortcuts import get_current_site
+# from django.template.loader import render_to_string
+# from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+# from django.utils.encoding import force_bytes, force_str
+# from . tokens import generate_token
 
-from . tokens import generate_token
 
 # Create your views here.
 
@@ -24,7 +24,7 @@ def home(request):
         'Archaeological Tourism',
         'Religious Tourism',
     ],
-    'Countries' : Country.objects.all()
+    'Countries' : Country.objects.all()[:10]
     })
 
 def categories(request):
@@ -109,8 +109,10 @@ def signup(request):
         # email = EmailMessage(email_subject, message2, settings.EMAIL_HOST_USER, [myuser.email],)
         # email.fail_silently = True
         # email.send()
-        return redirect('signin')
-    return render(request, "pages/signup.html")
+        return redirect('signup')
+    else:
+        return render(request, "pages/signup.html")
+        
 
 def signin(request):
     if request.method == 'POST':
@@ -125,8 +127,8 @@ def signin(request):
             # messages.success(request, "Logged In Sucessfully!!")
             return render(request, "pages/home.html",{"firstname":firstname})
         else:
-            messages.error(request, "Bad Credentials!!")
-            return redirect('home')
+            messages.error(request, "User not found")
+            return redirect('signin')
     else:
         return render(request, "pages/signin.html")
 
@@ -137,5 +139,10 @@ def signout(request):
 def details(request):
     return render(request, 'pages/details.html')
 
-def favoriteIconFunction(request):
-    pass
+def countries(request, countryId = None):
+    country = Country.objects.all().filter(id = countryId) if countryId is None else Country.objects.all().get(id = countryId)
+    return render(request, 'pages/countries.html', {
+        'cities' : City.objects.all(),
+        'country' : country,
+        'countries' : Country.objects.all(),
+    })

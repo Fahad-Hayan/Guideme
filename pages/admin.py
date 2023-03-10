@@ -4,3 +4,6 @@ from .models import Country, City
 
 admin.site.register(Country)
 admin.site.register(City)
+
+admin.site.site_header = 'Guideme Admin Panel'
+admin.site.site_title = 'Guideme Admin Panel'
