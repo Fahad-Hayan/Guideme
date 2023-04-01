@@ -1,46 +1,190 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
+<div class="masthead sticky-top" style="background-image: url({{image.url}});">
+    <!-- <img src="{{image.url}}" class="details-img img-fluid" alt="{{name}} Image"> -->
+</div>
+<div class="safe-area">
+    <div class="container">
+        <h3 class="fw-bolder text-uppercase d-inline">Details about {{category}} tourism in <h1 class="d-inline fw-semibold text-primary">{{name}}</h1>
+        </h3>
+        <ul class="list-group mt-3 mb-5">
 
-<!DOCTYPE html>
-<html>
+            <li class="list-group-item pt-3 ps-3 pb-0">
+                <p><span class="fw-bold text-uppercase">Country:</span> {{country}}</p>
+            </li>
+            <li class="list-group-item pt-3 ps-3 pb-0">
+                <p><span class="fw-bold text-uppercase">Tourism Type: </span>{{category}}</p>
+            </li>
+            <li class="list-group-item pt-3 ps-3 pb-0">
+                <p><span class="fw-bold text-uppercase">Rate: </span>{{rating}} / 5.0</p>
+            </li>
+            <li class="list-group-item pt-3 ps-3 pb-0">
+                <p><span class="fw-bold text-uppercase">Dollar Exchange: </span>{{exchangeRate}} USD</p>
+            </li>
+            <li class="list-group-item pt-3 ps-3 pb-0">
+                <p><span class="fw-bold text-uppercase">Caption: <br></span>{{caption|linebreaksbr}}</p>
+            </li>
+        </ul>
+        <!-- Activities -->
+        {% if activities.all %}
+        <h3 class="fw-bolder text-uppercase">Things to do in {{name}}</h3>
+        {% endif %}
+        <div id="activities" class="text-center">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <style>
-        .city-image {
-            width: 100%;
-            height: 300px;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            margin-bottom: 20px;
-        }
-    </style>
-</head>
+            <div class="row">
+                {% for activity in activities.all %}
+                <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
+                    <div class="card text-light p-0" id="{{activity.title}}">
+                        <img src="{{activity.image.url}}" alt="{{activity.title}}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase fw-bold text-start">{{activity.title}}</h5>
+                            <p class="card-text text-start">{{activity.caption|linebreaksbr}}</p>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
+                            data-bs-target="#modal-{{activity.id}}">
+                            See More
+                        </button>
 
-<body>
-    <div class="container py-5 px-5">
-        <h1 class="text-center">City Details</h1>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="city-image" style="background-image: url(city-image.jpg);"></div>
-            </div>
-            <div class="col-md-6">
-                <h3>City Name</h3>
-                <p>City Caption</p>
-                <p>
-                    <span class="badge badge-secondary">Rating: 4.5/5</span>
-                </p>
-                <h5>USD Exchange</h5>
-                <p>1 USD = 0.76 GBP</p>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal-{{activity.id}}" tabindex="-1"
+                            aria-labelledby="modal-label-{{activity.id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modal-label-{{activity.id}}">
+                                            <h4 class="text-black text-uppercase fw-bold">{{activity.title}}</h4>
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="t text-start">{{activity.caption|linebreaksbr}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+                <!-- Button trigger modal -->
+
             </div>
         </div>
+
+        <!-- Restaurants -->
+        {% if restaurants.all %}
+        <h3 class="fw-bolder text-uppercase">Restaurants of {{name}}</h3>
+        {% endif %}
+        <div id="restaurants" class="text-center">
+
+            <div class="row">
+                {% for restaurant in restaurants.all %}
+                <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
+                    <div class="card text-light p-0" id="{{restaurant.R_name}}">
+                        <img src="{{restaurant.image.url}}" alt="{{restaurant.R_name}}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase fw-bold text-start">{{restaurant.R_name}}</h5>
+                            <p class="card-text text-start">{{restaurant.caption|linebreaksbr}}</p>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
+                            data-bs-target="#modal-{{restaurant.id}}">
+                            See More
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal-{{restaurant.id}}" tabindex="-1"
+                            aria-labelledby="modal-label-{{restaurant.id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modal-label-{{restaurant.id}}">
+                                            <h4 class="text-black text-uppercase fw-bold">{{restaurant.R_name}}</h4>
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="t text-start">{{restaurant.caption|linebreaksbr}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+                <!-- Button trigger modal -->
+
+            </div>
+        </div>
+
+        <!-- Hotels -->
+        {% if hotels.all %}
+        <h3 class="fw-bolder text-uppercase">Hotels in {{name}}</h3>
+        {% endif %}
+        <div id="hotels" class="text-center">
+
+            <div class="row">
+                {% for hotel in hotels.all %}
+                <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
+                    <div class="card text-light p-0" id="{{hotel.R_name}}">
+                        <img src="{{hotel.image.url}}" alt="{{hotel.R_name}}" class="card-img-top">
+                        <div class="card-body">
+                            <h5 class="card-title text-uppercase fw-bold text-start">{{hotel.H_name}}</h5>
+                            <p class="card-text text-start">{{hotel.caption|linebreaksbr}}</p>
+                        </div>
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
+                            data-bs-target="#modal-{{hotel.id}}">
+                            See More
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="modal-{{hotel.id}}" tabindex="-1"
+                            aria-labelledby="modal-label-{{hotel.id}}" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="modal-label-{{hotel.id}}">
+                                            <h4 class="text-black text-uppercase fw-bold">{{hotel.H_name}}</h4>
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="t text-start">{{hotel.caption|linebreaksbr}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                {% endfor %}
+                <!-- Button trigger modal -->
+
+            </div>
+        </div>
+
+        <h3 class="fw-bolder text-uppercase">{{name}} on map</h3>
+        <div class="text-center">
+            <div class="card">
+                <div class="card-body">
+                    <iframe id="google-map" class="card-img-top" src="{{mapSrc}}" allowfullscreen loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+            
+        </div>
+
     </div>
-</body>
-
-</html>
-
+</div>
 
 {% endblock content %}

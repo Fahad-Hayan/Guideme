@@ -13,13 +13,13 @@
         <div class="collapse navbar-collapse" id="navbar-menu">
             <ul class="navbar-nav">
                 <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
-                <li class="nav-item"><a href="{% url 'categories' %}" class="nav-link">Categories</a></li>
-                <li class="nav-item"><a href="{% url 'wishlist' %}" class="nav-link">Wishlist</a></li>
-                <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
+                <li class="nav-item"><a href="{% url 'categories' %}" class="nav-link" >Categories</a></li>
+                <li class="nav-item"><a href="{% url 'wishlist' %}" class="nav-link" >Wishlist</a></li>
+                <li class="nav-item"><a href="{% url 'about' %}" class="nav-link" >About</a></li>
 
                 {% if user.is_authenticated %}
-                    <h3>Hello, {{firstname}}</h3>
-                    <li class="nav-item" id="login-link"><a href="{% url 'signout' %}" class="nav-link text-light d-inline">Logout</a><img src="{% static 'img\illustrations\avatar-placeholder.svg' %}" height="35px" alt="avatar" class="d-inline"></li>
+                    
+                    <li class="nav-item" id="login-link"><p class="d-inline">{{firstname}} {{lastname}}</p><img src="{% static 'img\illustrations\avatar-placeholder.svg' %}" height="35px" alt="avatar" class="d-inline"><a href="{% url 'signout' %}" class="nav-link text-light d-inline"> Logout</a></li>
                     
                 {% else %}
                     <li class="nav-item" id="login-link"><a href="{% url 'signin' %}" class="nav-link text-light">Sign in</a></li>

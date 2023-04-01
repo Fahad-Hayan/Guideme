@@ -1,12 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap');
 
+:root{
+    --canvas-color: #D9D9D9;
+    --primary-color: #0d6efd;
+    --secondary-color:rgba(0, 0, 0, 0.8);
+    --heading-text-color: #000;
+    --paragraph-text-color: rgb(100, 100, 100);
+    --on-hover-primary-color: #0d6efd99;
+    --shadow-color: #00000033;
+    --black: #000;
+    --white: #fff;
+
+    --border-radius: 5px;
+    --paragraph-font-size: 18px;
+}
 body{
-    width: 100%;
+    /* width: 100%; */
     /* height: 100vh; */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    background-color:#D9D9D9;
+    background-color:var(--canvas-color);
     font-family: 'Roboto Slab', serif;
     /* padding-top: 14vh; */
     /* margin-top: 12vh; */
@@ -16,21 +30,29 @@ body{
     top: 0;
     display: block;
     width: 100%;
-    height: 12vh;
+    /* height: 12vh; */
     transition: top 0.5s;
-    background-color: rgba(52, 58, 64, 1);
+    background-color: var(--secondary-color);
     z-index: 1100; /*z-index to bring the navbar in front of everything in the page*/
 }
+
+li.nav-item:hover{
+    text-decoration: underline;
+    color: var(--white);
+    border-radius: var(--border-radius);
+    margin-right: 5px;
+    background-color: var(--primary-color);
+}
 .display-6{
-    color: #3C60AC;
+    color: var(--primary-color);
 }
 div.heading-link > h3 > a{
     text-decoration: none;
-    color: black;
+    color: var(--heading-text-color);
 }
 div.heading-link > h3 > a:hover{
     text-decoration: underline;
-    color: #3C60AC;
+    color: var(--primary-color);
 }
 #login-link{
     position: fixed;
@@ -38,24 +60,53 @@ div.heading-link > h3 > a:hover{
     margin-right: 100px;
     /* background-color: #3C60AC; */
 }
+#google-map{
+    /* width: 60%; */
+    height: 50vh;
+    border-radius: var(--border-radius);
+    /* margin-bottom: 10px; */
+}
+.masthead{
+    background-size: cover;
+    min-height: 60vh;
+    position: relative;
+    border-radius: var(--border-radius);
+}
+@media(max-width:768px){
+    .masthead{
+        min-height: 30vh;
+    }
+}
+.details-img{
+    height:50vh;
+    width:auto;
+    border-radius: var(--border-radius);
+    align-self: center;
+    box-sizing: content-box;
+}
+
 #hero{
     padding-top: 14vh;
 }
 .btn{
-    background-color: #3C60AC;
+    background-color: var(--primary-color);
 }
 .btn:hover{
-    background-color: #667aa3;
+    background-color: var(--on-hover-primary-color);
 }
 .card {
-    /* display: flex; */
-    margin: 2%;
+    display: flex;
+    margin: 0% 2% 2% 2%;
 }
 .card a:link{
 text-decoration: none;
 }
 .card-title{
-    color: black;
+    color: var(--heading-text-color);
+}
+.country-card{
+    background-color: var(--primary-color);
+    border-radius: 0 0 5px 5px;
 }
 #favorite-btn{
     position:absolute;
@@ -78,7 +129,7 @@ text-decoration: none;
     text-align: center;
     font-size:small;
     font-weight: 100;
-    background-color: #3C60AC;
+    background-color: var(--primary-color);
 }
 #star-icon{
     width: 14px;
@@ -99,17 +150,20 @@ text-decoration: none;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    opacity: .75;
 }
-.card p,h4{
-    color: black;
+.card p{
+    color: var(--paragraph-text-color);
+    font-size: var(--paragraph-font-size);
+}
+.card h4{
+    color: var(--heading-text-color);
     
 }
 .card-img-top{
     height: 25vh;
     width: 100%;
     object-fit: cover;
-    border-radius: 3% 3% 3% 3%;
+    border-radius: 5px 5px 0 0;
 }
 
 #sign-forms{
@@ -133,7 +187,7 @@ text-decoration: none;
 
 .owl-prev span, .owl-next span{
     font-size: 80px;
-    color: #3C60AC;
+    color: var(--primary-color);
 }
 .social-icon img{
     width: 35px;
@@ -172,35 +226,36 @@ text-decoration: none;
 
 input:focus, button:focus {
     border: 1px !important;
-    box-shadow:#3C60AC !important;
+    box-shadow:var(--primary-color) !important;
 }
 
-.card, .btn, input{
+.btn, input{
     border-radius:5 !important;
 }
 
 
 /* about page */
 .about {
-    font-size: 18px;
+    font-size: var(--paragraph-font-size);
     color: #333;
     line-height: 1.5;
     margin: 20px 0;
     padding: 20px;
     background-color: #fff;
     border: 1px solid #ccc;
-    border-radius: 5px;
+    border-radius: var(--border-radius);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .about h2 {
-    font-size: 24px;
-    color: #555;
+    /* font-size: 24px; */
+    color: var(--heading-text-color);
     margin-bottom: 10px;
 }
 
 .about p {
     margin-bottom: 10px;
+    font-size: var(--paragraph-font-size);
 }
 
 .about a {
@@ -215,18 +270,18 @@ input:focus, button:focus {
 
 .column {
     float: left;
-    width: 33.3%;
+    width: 30%; 
     margin-bottom: 16px;
     padding: 0 8px;
 }
 
 .column div.card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: 8px;
-    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 var(--shadow-color);
+    /* margin: 8px; */
+    border-radius: var(--border-radius);
 }
 .about-img{
-    border-radius: 10px 10px 0px 0px;
+    border-radius: var(--border-radius) var(--border-radius) 0px 0px;
 }
 
 .about-section {
@@ -236,18 +291,8 @@ input:focus, button:focus {
     color: white;
 }
 
-.padding{
+.safe-area{
     padding-top: 13vh;
-} 
-
-.container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-} 
-
-.title {
-    color: grey;
 }
 
 .button {
@@ -256,20 +301,38 @@ input:focus, button:focus {
     display: inline-block;
     padding: 8px;
     color: white;
-    background-color: #000;
+    background-color: var(--primary-color);
+    border-radius: var(--border-radius);
     text-align: center;
     cursor: pointer;
     width: 100%;
 }
 
 .button:hover {
-    background-color: #555;
+    background-color: var(--on-hover-primary-color);
 }
-
-@media screen and (max-width: 650px) {
+.accordion{
+    /* --bs-accordion-color: trasparent; */
+    --bs-accordion-bg: transparent;
+    --bs-accordion-border-color: transparent;
+    --bs-accordion-btn-color: var(--white);
+    --bs-accordion-btn-bg: var(--primary-color);
+    --bs-accordion-active-color: var(--white);
+    --bs-accordion-active-bg: var(--on-hover-primary-color);
+}
+.accordion-header{
+    padding-bottom: 5px;
+    /* margin-top: 5px; */
+    /* border: 1px solid var(--black); */
+}
+@media screen and (max-width: 850px) {
     .column {
     width: 100%;
     display: block;
     }
+}
+
+.modal{
+    z-index: 1101;
 }
 

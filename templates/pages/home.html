@@ -31,10 +31,10 @@
         <div class="owl-carousel">
             {% for country in Countries %}
             <div class="card text-light p-0" id="{{country.name}}">
-                <a href="countries/{{country.id}}">
+                <a href="countries/{{country.name}}">
                     <img data-src="{{country.image.url}}" alt="{{country.name}}" class="card-img-top owl-lazy">
-                    <div class="card-body">
-                        <h4 class="card-title text-center">{{country.name}}</h4>
+                    <div class="card-body country-card">
+                        <h4 class="card-title text-center text-white">{{country.name}}</h4>
                     </div>
                 </a>
             </div>
@@ -44,7 +44,7 @@
         <!--Cities Cards-->
         {% for category in categories %}
         <div class="heading-link mx-2 mt-3">
-            <h3><a href="#" class="text-decoration-underline">{{category}} {% if category == 'Most Rated' %} Cities{% endif %}</a></h3>
+            <h3><a href="#" class="text-decoration-underline">{% if category.type != "Most Rated" %} {{category}} Tourism {% else %} {{category}} Cities{% endif %}</a></h3>
         </div>
 
         <!-- <div class="mx-1 mt-3 clearfix">
@@ -53,13 +53,13 @@
 
         <div class="owl-carousel">
             {% for city in cities %}
-            {% if city.category == category or category == 'Most Rated'%}
+            {% if city.category == category or category.type == 'Most Rated'%}
             <div class="card text-light p-0" id="{{city.name}}">
-                <a href="{% url 'details' %}" onclick="">
+                <a href="countries/{{city.country}}/{{city.id}}" onclick="">
                     <img data-src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top owl-lazy">
                     <div class="card-body">
                         <div class="badge-container">
-                            <div class="badge">{{city.category}}</div>
+                            <div class="badge">{{city.category}} Tourism</div>
                         </div>
                         <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
                         <p class="card-text">{{city.caption}}</p>
@@ -70,7 +70,7 @@
                 </a>
                 <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
                         src="{% static 'img/Icons/Favorite-outlined.svg' %}"
-                        onclick="toggleFavorite('{{city.name}}')"></button>
+                        onclick="toggleFavorite('{{city.name}}');"></button>
             </div>
             {% endif %}
             {% endfor %}

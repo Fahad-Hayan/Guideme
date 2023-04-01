@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
-from .models import Country, City
+from .models import Country, City, Category
 # from django.http import HttpResponse
 # from django.core.mail import EmailMessage, send_mail
 # from Guideme import settings
@@ -18,13 +18,9 @@ from .models import Country, City
 def home(request):
     return render(request, 'pages/home.html',{
         'cities' : City.objects.all().exclude(category='Not Specified')[:10],
-        'categories': [
-        'Most Rated',
-        'Leisure Tourism',
-        'Archaeological Tourism',
-        'Religious Tourism',
-    ],
-    'Countries' : Country.objects.all()[:10]
+        'categories':Category.objects.all().exclude(type = 'Not Specified'),
+        'Countries' : Country.objects.all()[:10],
+        'mostRated' : City.objects.order_by('rating')[:10],
     })
 
 def categories(request):
@@ -124,8 +120,9 @@ def signin(request):
         if user is not None:
             login(request, user)
             firstname = user.first_name
+            lastname =  user.last_name
             # messages.success(request, "Logged In Sucessfully!!")
-            return render(request, "pages/home.html",{"firstname":firstname})
+            return render(request, "pages/home.html",{"firstname":firstname, "lastname":lastname})
         else:
             messages.error(request, "User not found")
             return redirect('signin')
@@ -136,13 +133,51 @@ def signout(request):
     logout(request)
     return redirect("signin")
 
-def details(request):
-    return render(request, 'pages/details.html')
+def details(request, countryName , cityId):
+    cityInfo = City.objects.get(id=cityId)
+    context = {
+        'name': cityInfo.name,
+        'category': cityInfo.category,
+        'rating': cityInfo.rating,
+        'exchangeRate': cityInfo.exchangeRate,
+        'image': cityInfo.image,
+        'caption': cityInfo.caption,
+        'country': cityInfo.country,
+        'inWishlist': cityInfo.inWishlist,
+        'mapSrc' : cityInfo.mapSrc,
+        'activities': cityInfo.activities,
+        'restaurants': cityInfo.restaurants,
+        'hotels': cityInfo.hotels,
+    }
+    return render(request, 'pages/details.html', context)
 
-def countries(request, countryId = None):
-    country = Country.objects.all().filter(id = countryId) if countryId is None else Country.objects.all().get(id = countryId)
+def countries(request, countryName = None):
+    country = Country.objects.all().filter(name = countryName) if countryName is None else Country.objects.all().get(name = countryName)
+    # cityInfo = City.objects.get(id = cityId)
     return render(request, 'pages/countries.html', {
         'cities' : City.objects.all(),
         'country' : country,
         'countries' : Country.objects.all(),
+        'categories': Category.objects.all().exclude(type = 'Most Rated'),
+
+        # 'cname': cityInfo.name,
+        # 'ccategory': cityInfo.category,
+        # 'crating': cityInfo.rating,
+        # 'cexchangeRate': cityInfo.exchangeRate,
+        # 'cimage': cityInfo.image,
+        # 'ccaption': cityInfo.caption,
+        # 'ccountry': cityInfo.country,
+        # 'cinWishlist': cityInfo.inWishlist,
+
     })
+
+# def trimSpace(category):
+#     return trim()
+
+# def toggleFavorite(request, cityName) :
+#     favIcon = get_object_or_404()
+#     for i in favIcon:
+#         if (favIcon.item(i).getAttribute('src') == "/static/img/Icons/Favorite-outlined.svg"):
+#             favIcon.item(i).setAttribute('src', "/static/img/Icons/Favorite-filled.svg")
+#         else:
+#             favIcon.item(i).setAttribute('src', "/static/img/Icons/Favorite-outlined.svg")

@@ -1,40 +1,61 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-<div class="container padding">
-        {% if country %}
+<div class="safe-area container mt-2">
+    {% if country %}
+    <h3>The cities of "{{country}}" based on their categories</h3>
+    <div class="accordion mb-5 mt-5" id="accordionExample">
+        <div class="accordion-item">
+        {% for category in categories %}
+        <h2 class="accordion-header" id="heading{{category.id}}">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapse{{category.id}}" aria-expanded="true" aria-controls="collapse{{category.id}}">
+                {% if category.type == 'Not Specified' %}{{category.type}}{% else %} {{category.type}} Tourism{% endif %}
+            </button>
+        </h2>
         {% for city in cities %}
-        {% if country == city.country %}
-        <div class="column">
-            <div class="card text-light p-0" id="{{city.name}}">
-                <a href="{% url 'details' %}" onclick="">
-                    <img src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top">
-                    <div class="card-body">
-                        <div class="badge-container">
-                            <div class="badge">{{city.category}}</div>
+        {% if country == city.country and category == city.category %}
+        <!--  -->
+            <div id="collapse{{category.id}}" class="accordion-collapse collapse show"
+                aria-labelledby="heading{{category.id}}">
+                <div class="accordion-body p-0">
+                    <div class="column">
+                        <div class="card text-light mt-3 p-0" id="{{city.name}}">
+                            <a href="{{city.country}}/{{city.id}}">
+                                <img src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top">
+                                <div class="card-body">
+                                    <div class="badge-container">
+                                        <div class="badge">{{city.category}} Tourism</div>
+                                    </div>
+                                    <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
+                                    <p class="card-text">{{city.caption}}</p>
+                                    <p id="exchange-text">USD exchange rate: ${{city.exchangeRate}}</p>
+                                    <p id="rating-text"><img src="{% static 'img/Icons/star-filled.svg' %}"
+                                            id="star-icon" class="d-inline">
+                                        {{city.rating}}</p>
+                                </div>
+                            </a>
+                            <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
+                                    src="{% static 'img/Icons/Favorite-outlined.svg' %}"
+                                    onclick="toggleFavorite('{{city.name}}')"></button>
                         </div>
-                        <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
-                        <p class="card-text">{{city.caption}}</p>
-                        <p id="exchange-text">USD exchange rate: ${{city.exchangeRate}}</p>
-                        <p id="rating-text"><img src="{% static 'img/Icons/star-filled.svg' %}" id="star-icon"
-                                class="d-inline">
-                            {{city.rating}}</p>
                     </div>
-                </a>
-                <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
-                        src="{% static 'img/Icons/Favorite-outlined.svg' %}"
-                        onclick="toggleFavorite('{{city.name}}')"></button>
+                </div>
             </div>
+            <!--  -->
+            
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
         </div>
-        {% endif %}
-        {% endfor %}
+    </div>
     {% else %}
     <div class="container text-center">
         <div class="row">
             {% for count in countries %}
-            <div class="column">
+            <div class="column col-md-2 col-sm-2">
                 <div class="card text-light p-0" id="{{count.name}}">
-                    <a href="countries/{{count.id}}">
+                    <a href="countries/{{count.name}}">
                         <img src="{{count.image.url}}" alt="{{count.name}}" class="card-img-top">
                         <div class="card-body">
                             <h4 class="card-title">{{count.name}}</h4>

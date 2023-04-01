@@ -1,44 +1,30 @@
-{% extends 'base.html' %}
-{% load static%}
-{% block content %}
+<HTML>
 
-<div class="row">
-    <div class="column">
-        <div class="card">
-            <img src="{% static 'img/Pictures/Fahad.jpg' %}" alt="Fahad" class="about-img">
-            <div class="container">
-                <h2>Fahad Hayan</h2>
-                <h5>Team Leader</h5>
-                <p>Website Developer & Designer</p>
-                <p>fahad.hayan.aljashaam@gmail.com</p>
-                <p><button class="button">Contact</button></p>
-            </div>
-        </div>
-    </div>
-    <div class="column">
-        <div class="card">
-            <img src="{% static 'img/Pictures/Nariman.jpg' %}" alt="Nariman" class="about-img">
-            <div class="container">
-                <h2>Nariman Ali</h2>
-                <h5>Theoretical project coordinator</h5>
-                <p>Writer & Researcher</p>
-                <p>example@gmail.com</p>
-                <p><button class="button">Contact</button></p>
-            </div>
-        </div>
-    </div>
-    <div class="column">
-        <div class="card">
-            <img src="{% static 'img/Pictures/Ahmed.jpg' %}" alt="Ahmed" class="about-img">
-            <div class="container">
-                <h2>Ahmed Nazar</h2>
-                <h5>Theoretical project reviewer</h5>
-                <p>Writer & Researcher</p>
-                <p>example@gmail.com</p>
-                <p><button class="button">Contact</button></p>
-            </div>
-        </div>
-    </div>
-</div>
+<HEAD>
+    <TITLE>Writing to Subwindow</TITLE>
+    <SCRIPT LANGUAGE="JavaScript">
+        var newWindow
+        function makeNewWindow() {
+            newWindow = window.open("", "", "status,height=200,width=300")
+        }
+        function subWrite() {
+            if (newWindow.closed) {
+                makeNewWindow()
+            }
+            newWindow.focus()
+            var newContent = "<HTML><HEAD><TITLE>A New Doc</TITLE></HEAD>"
+            newContent += "<BODY BGCOLOR='coral'><H1>This document is brand new.</H1>"
+            newContent += "</BODY></HTML>"
+            newWindow.document.write(newContent)
+            newWindow.document.close() // close layout stream
+        }
+    </SCRIPT>
+</HEAD>
 
-{% endblock content %}
+<BODY onLoad="makeNewWindow()">
+    <FORM>
+        <INPUT TYPE="button" VALUE="Write to Subwindow" onClick="subWrite()">
+    </FORM>
+</BODY>
+
+</HTML>
