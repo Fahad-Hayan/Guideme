@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<div class="container safe-area">
+    {% if cities %}
+    {% if foundedResults > 1 %}
+    <h2>There are {{foundedResults}} results found</h2>
+    {% else %}
+    <h2>There is {{foundedResults}} result found</h2>
+    {% endif %}
+    <div class="row">
+        {% for city in cities %}
+        <div class="column col-md-2 col-sm-2">
+            <div class="card text-light mt-3 p-0" id="{{city.name}}">
+                <a href="{{city.country}}/{{city.id}}">
+                    <img src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top">
+                    <div class="card-body">
+                        <div class="badge-container">
+                            <div class="badge">{{city.category}} Tourism</div>
+                        </div>
+                        <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
+                        <p class="card-text">{{city.caption}}</p>
+                        <p id="exchange-text">USD exchange rate: ${{city.exchangeRate}}</p>
+                        <p id="rating-text"><img src="{% static 'img/Icons/star-filled.svg' %}"
+                                id="star-icon" class="d-inline">
+                            {{city.rating}}</p>
+                    </div>
+                </a>
+                <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
+                        src="{% static 'img/Icons/Favorite-outlined.svg' %}"
+                        onclick="toggleFavorite('{{city.name}}')"></button>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+    {% elif errorMsg %}
+        <h2>{{errorMsg}}</h2>
+    {% else %}
+    <h2>Could not find any result</h2>
+    {% endif %}
+    <!-- <div class="row safe-area">
+        <div class="col col-lg-3 col-md-4">
+            <div class="card p-5" id="sidebar-card">
+                <form action="{% url 'explore' %}" method="GET" id="filter-form">
+                    <div class="mb-3">
+                        <label for="searchbar" class="form-label">What are you searching for?</label>
+                        <input type="text" name="searchbar"id="searchbar" class="form-control" placeholder="Type the place name">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="category_exact" class="form-label">Category</label>
+                        <select name="category_exact" class="form-select">
+                            <option value="All" class="dropdown-item">All</option>
+                            {% for category in categories.all %}
+                            <option value="{{category}}" class="dropdown-item">{{category}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="country_exact" class="form-label">Country</label>
+                        <select name="country_exact" class="form-select">
+                            <option value="All" class="dropdown-item">All</option>
+                            {% for country in countries.all %}
+                            <option value="{{country}}" class="dropdown-item">{{country}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="sort-by" class="form-label">Sort By</label>
+                        <select name="country_exact" class="form-select">
+                            <option value="none" class="dropdown-item">None</option>
+                            <option value="name" class="dropdown-item">Name</option>
+                            <option value="rate" class="dropdown-item">Rate</option>
+                            <option value="exchange_rate" class="dropdown-item">Exchange Rate</option>
+                        </select>
+                    </div>
+                    <div class="d-grid">
+                        <input type="submit" value="Search" class="btn btn-primary">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col ms-5">
+
+            {% for city in cities %}
+
+            <div>
+                <h5 class="card-title">{{city.name}}</h5>
+                <p class="card-text">{{city.category}}</p>
+            </div>
+
+
+            {% endfor %}
+
+    </div>
+</div> -->
+</div>
+
+
+{% endblock content %}

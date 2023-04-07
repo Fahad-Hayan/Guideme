@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
+from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.db.models import Q
+from django.views.decorators.csrf import csrf_exempt
 from .models import Country, City, Category
 # from django.http import HttpResponse
 # from django.core.mail import EmailMessage, send_mail
@@ -20,11 +23,37 @@ def home(request):
         'cities' : City.objects.all().exclude(category='Not Specified')[:10],
         'categories':Category.objects.all().exclude(type = 'Not Specified'),
         'Countries' : Country.objects.all()[:10],
-        'mostRated' : City.objects.order_by('rating')[:10],
+        'mostRated' : City.objects.order_by('-rating')[:10],
     })
 
-def categories(request):
-    return render(request, 'pages/categories.html')
+def explore(request):
+    # category_filter = request.GET.get('category_exact')
+    # country_filter = request.GET.get('country_exact')
+    searchbar = request.GET.get('searchbar')
+
+    
+    countries= Country.objects.all()
+    categories = Category.objects.all().exclude(type__in = ['Most Rated','Not Specified'])
+
+    # if category_filter != 'All' and country_filter!= 'All' and searchbar != '' and searchbar is not None:
+    #     cities = cities.filter(Q(name__icontains = searchbar) | Q(country__name__icontains = searchbar)).filter(category__type__iexact = category_filter, country__name__iexact = country_filter)
+
+    # if category_filter != 'All':
+    #     cities = cities.filter(category__type__exact = category_filter)
+
+    # if country_filter != 'All':
+    #     cities = cities.filter(country__name__exact = country_filter)
+
+    if searchbar != '' and searchbar is not None:
+        cities = City.objects.all()
+        cities = cities.filter(Q(name__icontains = searchbar) | Q(country__name__icontains = searchbar))
+        return render(request, 'pages/explore.html',{
+            'cities': cities,
+            'foundedResults': cities.__len__,
+            'countries': countries,
+            'categories': categories,
+        })
+    return render(request, 'pages/explore.html',{'errorMsg': 'Please type somthing to search for!'})
 
 def wishlist(request):
     return render(request, 'pages/wishlist.html')
@@ -51,7 +80,7 @@ def email_confirmation(request):
 #         return redirect('signin')
 #     else:
 #         return render(request,'pages/activation_failed.html')
-
+@csrf_exempt
 def signup(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -109,29 +138,24 @@ def signup(request):
     else:
         return render(request, "pages/signup.html")
         
-
+@csrf_exempt
 def signin(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
-        
-        user = authenticate(username=username, password=password)
-        
+        user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
-            firstname = user.first_name
-            lastname =  user.last_name
-            # messages.success(request, "Logged In Sucessfully!!")
-            return render(request, "pages/home.html",{"firstname":firstname, "lastname":lastname})
+            return redirect(reverse('home'))
         else:
-            messages.error(request, "User not found")
-            return redirect('signin')
+            error_message = 'Invalid username or password'
     else:
-        return render(request, "pages/signin.html")
+        error_message = 'Something went wrong try again!'
+    return render(request, 'pages/signin.html', {'error_message': error_message})
 
 def signout(request):
     logout(request)
-    return redirect("signin")
+    return redirect(reverse('signin'))
 
 def details(request, countryName , cityId):
     cityInfo = City.objects.get(id=cityId)

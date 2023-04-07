@@ -14,7 +14,7 @@ from django.utils.translation import gettext_lazy as _
 
 def validate_min_length(value):
     if len(value) < 40:
-        raise ValidationError(_('Field must have a minimum length of 30 characters.'))
+        raise ValidationError(_('Field must have a minimum length of 40 characters.'))
 
 def validate_max_length(value):
     if len(value) > 2000:
@@ -49,7 +49,7 @@ class Activity(models.Model):
         verbose_name = 'Activity'
         verbose_name_plural = 'Activities'
     def __str__(self):
-        return self.title
+        return (self.cityName +'- '+self.title)
 
 class Restaurants(models.Model):
     R_name = models.CharField(max_length=50, unique=True, verbose_name='Name')
@@ -60,7 +60,7 @@ class Restaurants(models.Model):
         verbose_name = 'Restaurant'
         verbose_name_plural = 'Restaurants'
     def __str__(self):
-        return self.R_name
+        return (self.cityName +'- '+self.R_name)
 
 class Hotels(models.Model):
     H_name = models.CharField(max_length=50, unique=True, verbose_name='Name')
@@ -71,21 +71,21 @@ class Hotels(models.Model):
         verbose_name = 'Hotel'
         verbose_name_plural = 'Hotels'
     def __str__(self):
-        return self.H_name
+        return (self.cityName +'- '+self.H_name)
 class City(models.Model):
     name = models.CharField(max_length=25, verbose_name= 'City Name')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null= True, to_field='name', db_constraint=False)
-    caption = models.TextField(null = True, blank = False, verbose_name='Caption', validators=[validate_min_length,validate_max_length])
+    caption = models.TextField(null = True, blank = False, verbose_name='Caption', validators=[validate_min_length,validate_max_length], help_text='Caption length must be between 40 and 2000 characters')
     image = models.ImageField(upload_to='images/%y/%m/%d', default='images/default/defaultImage.jpg', verbose_name='Image')
-    exchangeRate = models.DecimalField(max_digits=6,decimal_places=2, verbose_name='Exchage Rate')
-    rating = models.DecimalField(max_digits=2,decimal_places=1, verbose_name='Rating')
+    exchangeRate = models.DecimalField(max_digits=6,decimal_places=2, verbose_name='Exchage Rate',help_text='The value of the local currency against one USD')
+    rating = models.DecimalField(max_digits=2,decimal_places=1, verbose_name='Rating' ,max_length=5, help_text='Must be from 0 to 5')
     activeState = models.BooleanField(default=True, verbose_name='Active State')
     inWishlist = models.BooleanField(default=False, verbose_name='in Wishlist')
     category = models.ForeignKey(Category, to_field='type', db_constraint=False, on_delete= models.CASCADE, null=True)
-    mapSrc = models.TextField(verbose_name='Map Source', null=True)
-    activities = models.ManyToManyField(Activity)
-    restaurants = models.ManyToManyField(Restaurants)
-    hotels = models.ManyToManyField(Hotels)
+    mapSrc = models.TextField(verbose_name='Map Source', blank= True)
+    activities = models.ManyToManyField(Activity, blank= True)
+    restaurants = models.ManyToManyField(Restaurants, blank=True)
+    hotels = models.ManyToManyField(Hotels, blank=True)
     class Meta:
         verbose_name = 'City'
         verbose_name_plural = 'Cities'

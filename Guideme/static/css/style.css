@@ -3,7 +3,7 @@
 :root{
     --canvas-color: #D9D9D9;
     --primary-color: #0d6efd;
-    --secondary-color:rgba(0, 0, 0, 0.8);
+    --navbar-bg-color:#0d6efdcc;
     --heading-text-color: #000;
     --paragraph-text-color: rgb(100, 100, 100);
     --on-hover-primary-color: #0d6efd99;
@@ -32,28 +32,19 @@ body{
     width: 100%;
     /* height: 12vh; */
     transition: top 0.5s;
-    background-color: var(--secondary-color);
+    background-color: var(--navbar-bg-color);
     z-index: 1100; /*z-index to bring the navbar in front of everything in the page*/
 }
 
-li.nav-item:hover{
-    text-decoration: underline;
+
+#brand-text{
     color: var(--white);
-    border-radius: var(--border-radius);
-    margin-right: 5px;
-    background-color: var(--primary-color);
-}
-.display-6{
-    color: var(--primary-color);
 }
 div.heading-link > h3 > a{
     text-decoration: none;
-    color: var(--heading-text-color);
+    color: var(--black);
 }
-div.heading-link > h3 > a:hover{
-    text-decoration: underline;
-    color: var(--primary-color);
-}
+
 #login-link{
     position: fixed;
     right: 0;
@@ -65,6 +56,12 @@ div.heading-link > h3 > a:hover{
     height: 50vh;
     border-radius: var(--border-radius);
     /* margin-bottom: 10px; */
+}
+#sidebar-card{
+    /* position: fixed; */
+    left: 0px;
+    height: max-content ;
+
 }
 .masthead{
     background-size: cover;
@@ -219,14 +216,14 @@ text-decoration: none;
     justify-content: center;
 } */
 
-#passEye-button{
-    border: none;
-    background-color: transparent;
+#basic-addon1{
+    border-radius: 0 5px 5px 0;
+    background-color: var(--primary-color);
 }
 
-input:focus, button:focus {
-    border: 1px !important;
-    box-shadow:var(--primary-color) !important;
+input:focus {
+    border: 2px solid ;
+    box-shadow:var(--primary-color);
 }
 
 .btn, input{
