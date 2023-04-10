@@ -42,6 +42,7 @@ class Category(models.Model):
 
 class Activity(models.Model):
     title = models.CharField(max_length=50, unique=True)
+    type = models.ForeignKey(Category, to_field='type', db_constraint=False, on_delete= models.CASCADE, null=True)
     caption = models.TextField(blank=True, unique=True)
     cityName = models.CharField(max_length=25, verbose_name= 'City Name', default='all')
     image = models.ImageField(upload_to='images/%y/%m/%d', default='images/default/defaultImage.jpg', verbose_name='Image')
@@ -49,7 +50,7 @@ class Activity(models.Model):
         verbose_name = 'Activity'
         verbose_name_plural = 'Activities'
     def __str__(self):
-        return (self.cityName +'- '+self.title)
+        return ('(' + self.cityName + ' - ' + str(self.type) +'): '+ self.title)
 
 class Restaurants(models.Model):
     R_name = models.CharField(max_length=50, unique=True, verbose_name='Name')
@@ -60,7 +61,7 @@ class Restaurants(models.Model):
         verbose_name = 'Restaurant'
         verbose_name_plural = 'Restaurants'
     def __str__(self):
-        return (self.cityName +'- '+self.R_name)
+        return ('(' +self.cityName +'): '+self.R_name)
 
 class Hotels(models.Model):
     H_name = models.CharField(max_length=50, unique=True, verbose_name='Name')
@@ -71,7 +72,7 @@ class Hotels(models.Model):
         verbose_name = 'Hotel'
         verbose_name_plural = 'Hotels'
     def __str__(self):
-        return (self.cityName +'- '+self.H_name)
+        return ('(' + self.cityName +'): '+self.H_name)
 class City(models.Model):
     name = models.CharField(max_length=25, verbose_name= 'City Name')
     country = models.ForeignKey(Country, on_delete=models.CASCADE, null= True, to_field='name', db_constraint=False)
@@ -92,5 +93,5 @@ class City(models.Model):
         ordering = ['-rating'] 
         
     def __str__(self):
-        return self.name
+        return (self.name + " - " + str(self.category))
 

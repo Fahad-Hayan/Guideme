@@ -100,6 +100,11 @@ text-decoration: none;
 }
 .card-title{
     color: var(--heading-text-color);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 .country-card{
     background-color: var(--primary-color);

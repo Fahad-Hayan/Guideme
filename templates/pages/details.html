@@ -28,14 +28,14 @@
         </ul>
         <!-- Activities -->
         {% if activities.all %}
-        <h3 class="fw-bolder text-uppercase">Things to do in {{name}}</h3>
+        <h3 class="fw-bolder text-uppercase">{{category}} Activities in {{name}}</h3>
         {% endif %}
         <div id="activities" class="text-center">
 
             <div class="row">
                 {% for activity in activities.all %}
                 <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
-                    <div class="card text-light p-0" id="{{activity.title}}">
+                    <div class="card text-light p-0" id="{{activity.title | cut:' '}}">
                         <img src="{{activity.image.url}}" alt="{{activity.title}}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title text-uppercase fw-bold text-start">{{activity.title}}</h5>
@@ -43,24 +43,24 @@
                         </div>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
-                            data-bs-target="#modal-{{activity.id}}">
+                            data-bs-target="#modal-{{activity.id}}-{{activity.title | cut:' '}}">
                             See More
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="modal-{{activity.id}}" tabindex="-1"
-                            aria-labelledby="modal-label-{{activity.id}}" aria-hidden="true">
+                        <div class="modal fade" id="modal-{{activity.id}}-{{activity.title | cut:' '}}" tabindex="-1"
+                            aria-labelledby="modal-label-{{activity.id}}-{{activity.title | cut:' '}}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-label-{{activity.id}}">
+                                        <h5 class="modal-title" id="modal-label-{{activity.id}}-{{activity.title | cut:' '}}">
                                             <h4 class="text-black text-uppercase fw-bold">{{activity.title}}</h4>
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="t text-start">{{activity.caption|linebreaksbr}}</p>
+                                        <p class="text-start">{{activity.caption|linebreaksbr}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -84,32 +84,32 @@
             <div class="row">
                 {% for restaurant in restaurants.all %}
                 <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
-                    <div class="card text-light p-0" id="{{restaurant.R_name}}">
-                        <img src="{{restaurant.image.url}}" alt="{{restaurant.R_name}}" class="card-img-top">
+                    <div class="card text-light p-0" id="{{restaurant.R_name | cut:' '}}">
+                        <img src="{{restaurant.image.url}}" alt="{{restaurant.R_name | cut:' '}}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title text-uppercase fw-bold text-start">{{restaurant.R_name}}</h5>
                             <p class="card-text text-start">{{restaurant.caption|linebreaksbr}}</p>
                         </div>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
-                            data-bs-target="#modal-{{restaurant.id}}">
+                            data-bs-target="#modal-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}">
                             See More
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="modal-{{restaurant.id}}" tabindex="-1"
-                            aria-labelledby="modal-label-{{restaurant.id}}" aria-hidden="true">
+                        <div class="modal fade" id="modal-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}" tabindex="-1"
+                            aria-labelledby="modal-label-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-label-{{restaurant.id}}">
+                                        <h5 class="modal-title" id="modal-label-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}">
                                             <h4 class="text-black text-uppercase fw-bold">{{restaurant.R_name}}</h4>
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="t text-start">{{restaurant.caption|linebreaksbr}}</p>
+                                        <p class="text-start">{{restaurant.caption|linebreaksbr}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -133,32 +133,32 @@
             <div class="row">
                 {% for hotel in hotels.all %}
                 <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
-                    <div class="card text-light p-0" id="{{hotel.R_name}}">
-                        <img src="{{hotel.image.url}}" alt="{{hotel.R_name}}" class="card-img-top">
+                    <div class="card text-light p-0" id="{{hotel.H_name | cut:' '}}">
+                        <img src="{{hotel.image.url}}" alt="{{hotel.H_name}}" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title text-uppercase fw-bold text-start">{{hotel.H_name}}</h5>
                             <p class="card-text text-start">{{hotel.caption|linebreaksbr}}</p>
                         </div>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
-                            data-bs-target="#modal-{{hotel.id}}">
+                            data-bs-target="#modal-{{hotel.id}}-{{hotel.H_name | cut:' '}}">
                             See More
                         </button>
 
                         <!-- Modal -->
-                        <div class="modal fade" id="modal-{{hotel.id}}" tabindex="-1"
-                            aria-labelledby="modal-label-{{hotel.id}}" aria-hidden="true">
+                        <div class="modal fade" id="modal-{{hotel.id}}-{{hotel.H_name | cut:' '}}" tabindex="-1"
+                            aria-labelledby="modal-label-{{hotel.id}}-{{hotel.H_name | cut:' '}}" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-scrollable">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-label-{{hotel.id}}">
+                                        <h5 class="modal-title" id="modal-label-{{hotel.id}}-{{hotel.H_name | cut:' '}}">
                                             <h4 class="text-black text-uppercase fw-bold">{{hotel.H_name}}</h4>
                                         </h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p class="t text-start">{{hotel.caption|linebreaksbr}}</p>
+                                        <p class="text-start">{{hotel.caption|linebreaksbr}}</p>
                                     </div>
                                 </div>
                             </div>

@@ -12,7 +12,7 @@
         {% for city in cities %}
         <div class="column col-md-2 col-sm-2">
             <div class="card text-light mt-3 p-0" id="{{city.name}}">
-                <a href="{{city.country}}/{{city.id}}">
+                <a href="countries/{{city.country}}/{{city.id}}">
                     <img src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top">
                     <div class="card-body">
                         <div class="badge-container">
