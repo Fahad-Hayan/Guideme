@@ -5,8 +5,11 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.db.models import Q
 from django.views.decorators.csrf import csrf_exempt
-from .models import Country, City, Category
-# from django.http import HttpResponse
+from .models import Country, City, Category, Wishlist
+from django.shortcuts import get_object_or_404
+from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect
+# from django.http import JsonResponse
 # from django.core.mail import EmailMessage, send_mail
 # from Guideme import settings
 # from django.contrib.sites.shortcuts import get_current_site
@@ -55,8 +58,27 @@ def explore(request):
         })
     return render(request, 'pages/explore.html',{'errorMsg': 'Please type somthing to search for!'})
 
+@login_required
 def wishlist(request):
-    return render(request, 'pages/wishlist.html')
+    wishlist = Wishlist.objects.get(user=request.user)
+    cities = wishlist.cities.all()
+    context = {'cities': cities}
+    return render(request, 'pages/wishlist.html', context)
+
+@login_required
+def wishlist_add_remove(request, city_id):
+    wishlist, created = Wishlist.objects.get_or_create(user=request.user)
+    city = get_object_or_404(City, id=city_id)
+    
+    if city in wishlist.cities.all():
+        wishlist.cities.remove(city)
+        message = 'City removed from wishlist'
+    else:
+        wishlist.cities.add(city)
+        message = 'City added to wishlist'
+    
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
 
 def about(request):
     return render(request, 'pages/about.html')

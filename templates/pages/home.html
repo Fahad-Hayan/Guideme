@@ -48,7 +48,7 @@
         <div class="owl-carousel">
             {% for city in mostRated %}
 
-            <div class="card text-light p-0" id="{{city.name}}">
+            <div class="card text-light p-0" id="{{city.id}}">
                 <a href="countries/{{city.country}}/{{city.id}}" onclick="">
                     <img data-src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top owl-lazy">
                     <div class="card-body">
@@ -62,9 +62,28 @@
                                 class="d-inline"> {{city.rating}}</p>
                     </div>
                 </a>
-                <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
-                        src="{% static 'img/Icons/Favorite-outlined.svg' %}"
-                        onclick="toggleFavorite('{{city.name}}');"></button>
+                {% if user.is_authenticated %}
+                {% if city in user.wishlist.cities.all %}
+                <form action="{% url 'wishlist_add_remove' city.id %}" method="POST" target="wishlist-iframe">
+                    {% csrf_token %}
+                    <button type="submit" id="favorite-btn" class="wishlist-btn"><img
+                        class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-filled.svg' %}"></b>
+                </form>
+                
+                {% else %}
+                <form action="{% url 'wishlist_add_remove' city.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="favorite-btn" class="wishlist-btn"><img
+                        class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></button>
+                </form>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'signin' %}" id="favorite-btn" class="wishlist-btn"><img
+                    class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></a>
+                {% endif %}
+
+                <!-- <button type="button" id="favorite-btn" class="wishlist-btn" data-city-id="{{ city.id }}"> <img
+                        class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></button> -->
             </div>
 
             {% endfor %}
@@ -95,9 +114,25 @@
                                 class="d-inline"> {{city.rating}}</p>
                     </div>
                 </a>
-                <button type="button" id="favorite-btn"> <img class="{{city.name}}F-icon"
-                        src="{% static 'img/Icons/Favorite-outlined.svg' %}"
-                        onclick="toggleFavorite('{{city.name}}');"></button>
+                {% if user.is_authenticated %}
+                {% if city in user.wishlist.cities.all %}
+                <form action="{% url 'wishlist_add_remove' city.id %}" method="POST" target="wishlist-iframe">
+                    {% csrf_token %}
+                    <button type="submit" id="favorite-btn" class="wishlist-btn"><img
+                        class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-filled.svg' %}"></b>
+                </form>
+                
+                {% else %}
+                <form action="{% url 'wishlist_add_remove' city.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="favorite-btn" class="wishlist-btn"><img
+                        class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></button>
+                </form>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'signin' %}" id="favorite-btn" class="wishlist-btn"><img
+                    class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></a>
+                {% endif %}
             </div>
             {% endif %}
             {% endfor %}

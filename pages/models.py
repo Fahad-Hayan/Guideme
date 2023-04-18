@@ -1,7 +1,7 @@
 from django.db import models
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
-# from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -11,6 +11,8 @@ from django.utils.translation import gettext_lazy as _
 #     lastname = AbstractUser.last_name
 #     password = AbstractUser.password
 #     email = AbstractUser.email
+#     user_permissions = AbstractUser.user_permissions
+#     groups = AbstractUser.groups
 
 def validate_min_length(value):
     if len(value) < 40:
@@ -19,6 +21,7 @@ def validate_min_length(value):
 def validate_max_length(value):
     if len(value) > 2000:
         raise ValidationError(_('Field must have a maximum length of 2000 characters.'))
+
 
 class Country(models.Model):
     name = models.CharField(max_length=16, verbose_name='Country Name', unique= True)
@@ -49,6 +52,7 @@ class Activity(models.Model):
     class Meta:
         verbose_name = 'Activity'
         verbose_name_plural = 'Activities'
+        ordering = ['cityName','type','title']
     def __str__(self):
         return ('(' + self.cityName + ' - ' + str(self.type) +'): '+ self.title)
 
@@ -60,6 +64,7 @@ class Restaurants(models.Model):
     class Meta:
         verbose_name = 'Restaurant'
         verbose_name_plural = 'Restaurants'
+        ordering = ['cityName','R_name']
     def __str__(self):
         return ('(' +self.cityName +'): '+self.R_name)
 
@@ -71,6 +76,7 @@ class Hotels(models.Model):
     class Meta:
         verbose_name = 'Hotel'
         verbose_name_plural = 'Hotels'
+        ordering = ['cityName','H_name']
     def __str__(self):
         return ('(' + self.cityName +'): '+self.H_name)
 class City(models.Model):
@@ -81,7 +87,7 @@ class City(models.Model):
     exchangeRate = models.DecimalField(max_digits=6,decimal_places=2, verbose_name='Exchage Rate',help_text='The value of the local currency against one USD')
     rating = models.DecimalField(max_digits=2,decimal_places=1, verbose_name='Rating' ,max_length=5, help_text='Must be from 0 to 5')
     activeState = models.BooleanField(default=True, verbose_name='Active State')
-    inWishlist = models.BooleanField(default=False, verbose_name='in Wishlist')
+    inWishlist = models.ManyToManyField(User, related_name='inWishList', blank=True)
     category = models.ForeignKey(Category, to_field='type', db_constraint=False, on_delete= models.CASCADE, null=True)
     mapSrc = models.TextField(verbose_name='Map Source', blank= True)
     activities = models.ManyToManyField(Activity, blank= True)
@@ -94,4 +100,14 @@ class City(models.Model):
         
     def __str__(self):
         return (self.name + " - " + str(self.category))
+
+class Wishlist(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    cities = models.ManyToManyField(City, blank=True)
+    class Meta:
+        verbose_name = 'Wish List'
+        verbose_name_plural = 'Wish Lists'
+    
+    def __str__(self):
+        return str(self.user)
 

@@ -6,7 +6,7 @@
 </div>
 <div class="safe-area">
     <div class="container">
-        <h3 class="fw-bolder text-uppercase d-inline">Details about {{category}} tourism in <h1 class="d-inline fw-semibold text-primary">{{name}}</h1>
+        <h3 class="fw-bolder text-uppercase d-inline">Details about <span class="text-primary">{{category}}</span> tourism in <span class="text-primary">{{name}}</span>
         </h3>
         <ul class="list-group mt-3 mb-5">
 
@@ -23,7 +23,7 @@
                 <p><span class="fw-bold text-uppercase">Dollar Exchange: </span>{{exchangeRate}} USD</p>
             </li>
             <li class="list-group-item pt-3 ps-3 pb-0">
-                <p><span class="fw-bold text-uppercase">Caption: <br></span>{{caption|linebreaksbr}}</p>
+                <p><span class="fw-bold text-uppercase">Description: <br></span>{{caption|linebreaksbr}}</p>
             </li>
         </ul>
         <!-- Activities -->
@@ -174,15 +174,14 @@
         </div>
 
         <h3 class="fw-bolder text-uppercase">{{name}} on map</h3>
-        <div class="text-center">
-            <div class="card">
+
+            <div class="card ps-0">
                 <div class="card-body">
                     <iframe id="google-map" class="card-img-top" src="{{mapSrc}}" allowfullscreen loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
             </div>
             
-        </div>
 
     </div>
 </div>

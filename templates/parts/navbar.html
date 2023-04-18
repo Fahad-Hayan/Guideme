@@ -26,7 +26,7 @@
                 </form>
                 {% if user.is_authenticated %}
                     
-                    <li class="nav-item" id="login-link"><p class="d-inline">{{user.firstname}}</p><img src="{% static 'img\illustrations\avatar-placeholder.svg' %}" height="35px" alt="avatar" class="d-inline"><a href="{% url 'signout' %}" class="nav-link text-light d-inline"> Logout</a></li>
+                    <li class="nav-item" id="login-link"><p class="d-inline">{{user.first_name}}</p><img src="{% static 'img\illustrations\avatar-placeholder.svg' %}" height="35px" alt="avatar" class="d-inline"><a href="{% url 'signout' %}" class="nav-link text-light d-inline"> Logout</a></li>
                     
                 {% else %}
                     <li class="nav-item" id="login-link"><a href="{% url 'signin' %}" class="nav-link text-light">Sign in</a></li>

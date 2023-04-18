@@ -42,6 +42,18 @@ function passwordVisibility () {
     eyeStatus.setAttribute('src', '/static/img/Icons/opend-eye.svg')
   }
 }
+//wishlist functionality
+// $(document).on('click', '.wishlist-btn', function() {
+//   alert('seccess')
+//   var cityId = $(this).data('city-id');
+//   $.ajax({
+//       url: '{% url "wishlist/" city_id=cityId %}',
+//       dataType: 'json',
+//       success: function(data) {
+//           alert(data.message);
+//       }
+//   });
+// });
 
 $('.owl-carousel').owlCarousel({
   items: 4,
