@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container safe-area">
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-lg-6 col-md-6 col-sm-6">
+            <div class="card shadow">
+                <div class="card-title text-center border-bottom">
+                    <h2 class="p-3">Profile</h2>
+                    
+                </div>
+                {% if messages %}
+                    <ul>
+                        {% for message in messages %}
+                        <div id="alert" class="alert alert-success alert-dismissible fade show me-4" role="alert">
+                            <li type="None">{{ message }}
+                            </li>
+                        </div>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row mb-4">
+                            <div class="col">
+                                <label for="id_first_name" class="form-label">First name</label>
+                                <input type="text" class="form-control" id="id_first_name" name="first_name"
+                                    value="{{ request.user.first_name }}">
+                            </div>
+                            <div class="col">
+                                <label for="id_last_name" class="form-label">Last name</label>
+                                <input type="text" class="form-control" id="id_last_name" name="last_name"
+                                    value="{{ request.user.last_name }}">
+                            </div>
+                        </div>
+                        <label for="username" class="form-label">Username</label>
+                        <input type="text" class="form-control" id="username" name="username">
+                        <label for="id_old_password" class="form-label">Old password</label>
+                        <input type="password" class="form-control" id="id_old_password" name="old_password">
+                        <label for="id_new_password1" class="form-label">New password</label>
+                        <input type="password" class="form-control" id="id_new_password1" name="new_password1">
+                        <label for="id_new_password2" class="form-label">Confirm new password</label>
+                        <input type="password" class="form-control" id="id_new_password2" name="new_password2">
+                        <div class="d-grid ms-5 me-5 pt-3 ps-5 pe-5">
+                            <button type="submit" class="btn text-light main-bg">Save changes</button>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+{% endblock %}

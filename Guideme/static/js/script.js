@@ -12,6 +12,14 @@ $(document).ready(function () {
   }
 })
 
+$(document).ready(function() {
+  window.setTimeout(function() {
+    $("#alert").fadeTo(500, 0).slideUp(500, function(){
+      $(this).remove();
+    });
+  }, 3000);
+});
+
 function toggleFavorite (cityName) {
   // get the image element of the favorite button
   var favIcon = document.getElementsByClassName(cityName + 'F-icon')

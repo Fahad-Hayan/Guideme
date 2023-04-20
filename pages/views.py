@@ -9,6 +9,9 @@ from .models import Country, City, Category, Wishlist
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+
 # from django.http import JsonResponse
 # from django.core.mail import EmailMessage, send_mail
 # from Guideme import settings
@@ -79,6 +82,40 @@ def wishlist_add_remove(request, city_id):
     
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
+@login_required 
+@csrf_exempt
+def profile(request):
+    if request.method == 'POST':
+        # Handle first name and last name changes
+        first_name = request.POST.get('first_name')
+        last_name = request.POST.get('last_name')
+        username = request.POST.get('username')
+        if first_name:
+            request.user.first_name = first_name
+        if last_name:
+            if User.objects.filter(username=username):
+                messages.error(request, "Username already exist! Please try some other username.")
+            else:
+                request.user.last_name = last_name
+        if username:
+            request.user.username = username
+        request.user.save()
+        messages.success(request, 'Profile updated successfully')
+
+        # Handle password change
+        password_form = PasswordChangeForm(request.user, request.POST)
+        if password_form.is_valid():
+            user = password_form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Password updated successfully')
+        # else:
+        #     for field, errors in password_form.errors.items():
+        #         for error in errors:
+        #             messages.error(request, f"{field}: {error}")
+    else:
+        password_form = PasswordChangeForm(request.user)
+
+    return render(request, 'pages/profile.html', {'password_form': password_form})
 
 def about(request):
     return render(request, 'pages/about.html')

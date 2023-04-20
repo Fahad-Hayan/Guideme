@@ -51,6 +51,11 @@ div.heading-link > h3 > a{
     margin-right: 100px;
     /* background-color: #3C60AC; */
 }
+#filter-form{
+    position: relative;
+    width: 70%;
+    left: 30%;
+}
 #google-map{
     /* width: 60%; */
     height: 50vh;
