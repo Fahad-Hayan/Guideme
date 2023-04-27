@@ -1,189 +1,238 @@
 {% extends 'base.html' %}
 {% load static%}
 {% block content %}
-<div class="masthead sticky-top" style="background-image: url({{image.url}});">
-    <!-- <img src="{{image.url}}" class="details-img img-fluid" alt="{{name}} Image"> -->
-</div>
-<div class="safe-area">
-    <div class="container">
-        <h3 class="fw-bolder text-uppercase d-inline">Details about <span class="text-primary">{{category}}</span> tourism in <span class="text-primary">{{name}}</span>
-        </h3>
-        <ul class="list-group mt-3 mb-5">
-
-            <li class="list-group-item pt-3 ps-3 pb-0">
-                <p><span class="fw-bold text-uppercase">Country:</span> {{country}}</p>
-            </li>
-            <li class="list-group-item pt-3 ps-3 pb-0">
-                <p><span class="fw-bold text-uppercase">Tourism Type: </span>{{category}}</p>
-            </li>
-            <li class="list-group-item pt-3 ps-3 pb-0">
-                <p><span class="fw-bold text-uppercase">Rate: </span>{{rating}} / 5.0</p>
-            </li>
-            <li class="list-group-item pt-3 ps-3 pb-0">
-                <p><span class="fw-bold text-uppercase">Dollar Exchange: </span>{{exchangeRate}} USD</p>
-            </li>
-            <li class="list-group-item pt-3 ps-3 pb-0">
-                <p><span class="fw-bold text-uppercase">Description: <br></span>{{caption|linebreaksbr}}</p>
-            </li>
-        </ul>
-        <!-- Activities -->
-        {% if activities.all %}
-        <h3 class="fw-bolder text-uppercase">{{category}} Activities in {{name}}</h3>
-        {% endif %}
-        <div id="activities" class="text-center">
-
-            <div class="row">
-                {% for activity in activities.all %}
-                <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
-                    <div class="card text-light p-0" id="{{activity.title | cut:' '}}">
-                        <img src="{{activity.image.url}}" alt="{{activity.title}}" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title text-uppercase fw-bold text-start">{{activity.title}}</h5>
-                            <p class="card-text text-start">{{activity.caption|linebreaksbr}}</p>
-                        </div>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
-                            data-bs-target="#modal-{{activity.id}}-{{activity.title | cut:' '}}">
-                            See More
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal-{{activity.id}}-{{activity.title | cut:' '}}" tabindex="-1"
-                            aria-labelledby="modal-label-{{activity.id}}-{{activity.title | cut:' '}}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-label-{{activity.id}}-{{activity.title | cut:' '}}">
-                                            <h4 class="text-black text-uppercase fw-bold">{{activity.title}}</h4>
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-start">{{activity.caption|linebreaksbr}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {% endfor %}
-                <!-- Button trigger modal -->
-
-            </div>
-        </div>
-
-        <!-- Restaurants -->
-        {% if restaurants.all %}
-        <h3 class="fw-bolder text-uppercase">Restaurants of {{name}}</h3>
-        {% endif %}
-        <div id="restaurants" class="text-center">
-
-            <div class="row">
-                {% for restaurant in restaurants.all %}
-                <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
-                    <div class="card text-light p-0" id="{{restaurant.R_name | cut:' '}}">
-                        <img src="{{restaurant.image.url}}" alt="{{restaurant.R_name | cut:' '}}" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title text-uppercase fw-bold text-start">{{restaurant.R_name}}</h5>
-                            <p class="card-text text-start">{{restaurant.caption|linebreaksbr}}</p>
-                        </div>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
-                            data-bs-target="#modal-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}">
-                            See More
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}" tabindex="-1"
-                            aria-labelledby="modal-label-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-label-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}">
-                                            <h4 class="text-black text-uppercase fw-bold">{{restaurant.R_name}}</h4>
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-start">{{restaurant.caption|linebreaksbr}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {% endfor %}
-                <!-- Button trigger modal -->
-
-            </div>
-        </div>
-
-        <!-- Hotels -->
-        {% if hotels.all %}
-        <h3 class="fw-bolder text-uppercase">Hotels in {{name}}</h3>
-        {% endif %}
-        <div id="hotels" class="text-center">
-
-            <div class="row">
-                {% for hotel in hotels.all %}
-                <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
-                    <div class="card text-light p-0" id="{{hotel.H_name | cut:' '}}">
-                        <img src="{{hotel.image.url}}" alt="{{hotel.H_name}}" class="card-img-top">
-                        <div class="card-body">
-                            <h5 class="card-title text-uppercase fw-bold text-start">{{hotel.H_name}}</h5>
-                            <p class="card-text text-start">{{hotel.caption|linebreaksbr}}</p>
-                        </div>
-                        <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
-                            data-bs-target="#modal-{{hotel.id}}-{{hotel.H_name | cut:' '}}">
-                            See More
-                        </button>
-
-                        <!-- Modal -->
-                        <div class="modal fade" id="modal-{{hotel.id}}-{{hotel.H_name | cut:' '}}" tabindex="-1"
-                            aria-labelledby="modal-label-{{hotel.id}}-{{hotel.H_name | cut:' '}}" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="modal-label-{{hotel.id}}-{{hotel.H_name | cut:' '}}">
-                                            <h4 class="text-black text-uppercase fw-bold">{{hotel.H_name}}</h4>
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-start">{{hotel.caption|linebreaksbr}}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-
-                {% endfor %}
-                <!-- Button trigger modal -->
-
-            </div>
-        </div>
-
-        <h3 class="fw-bolder text-uppercase">{{name}} on map</h3>
-
-            <div class="card ps-0">
+<!-- <div class="masthead sticky-top" style="background-image: url({{image.url}});">
+</div> -->
+<div class="container-fluid vh-100 d-flex align-items-center justify-content-center"
+    style="background-image: url({{image.url}}); background-size: cover; background-position: center;">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <div class="card" id="welcome-card">
                 <div class="card-body">
-                    <iframe id="google-map" class="card-img-top" src="{{mapSrc}}" allowfullscreen loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    <h1 class="card-title">Welcome to {{name}}</h1>
+                    <p class="card-text text-black">{{caption}}</p>
+                    <div class="text-center">
+                        <a href="#details-section" class="btn btn-primary">Learn More</a>
+                    </div>
                 </div>
             </div>
-            
-
+        </div>
     </div>
 </div>
+<section id="details-section">
+        <div class="container mt-3">
+            <h3 class="fw-bolder text-uppercase d-inline">Details about <span class="text-primary">{{category}}</span>
+                tourism in <span class="text-primary">{{name}}</span>
+            </h3>
+            <ul class="list-group mt-3 mb-5">
 
+                <li class="list-group-item pt-3 ps-3 pb-0">
+                    <p><span class="fw-bold text-uppercase">Country:</span> {{country}}</p>
+                </li>
+                <li class="list-group-item pt-3 ps-3 pb-0">
+                    <p><span class="fw-bold text-uppercase">Tourism Type: </span>{{category}}</p>
+                </li>
+                <li class="list-group-item pt-3 ps-3 pb-0">
+                    <p><span class="fw-bold text-uppercase">Rate: </span>{{rating}} / 5.0</p>
+                </li>
+                <li class="list-group-item pt-3 ps-3 pb-0">
+                    <p><span class="fw-bold text-uppercase">Dollar Exchange: </span>{{exchangeRate}} USD</p>
+                </li>
+                <li class="list-group-item pt-3 ps-3 pb-0">
+                    <p><span class="fw-bold text-uppercase">Description: <br></span><span
+                            class="description">{{caption|linebreaksbr}} </span><a class="see-more-link btn-link">See
+                            More</a></p>
+                </li>
+            </ul>
+            <!-- Activities -->
+            {% if activities.all %}
+            <h3 class="fw-bolder text-uppercase">{{category}} Activities in {{name}}</h3>
+            {% endif %}
+            <div id="activities" class="text-center mt-3">
+
+                <div class="row">
+                    {% for activity in activities.all %}
+                    <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
+                        <div class="card text-light p-0" id="{{activity.title | cut:' '}}">
+                            <img src="{{activity.image.url}}" alt="{{activity.title}}" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase fw-bold text-start">{{activity.title}}</h5>
+                                <p class="card-text text-start">{{activity.caption|linebreaksbr}}</p>
+                            </div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
+                                data-bs-target="#modal-{{activity.id}}-{{activity.title | cut:' '}}">
+                                See More
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-{{activity.id}}-{{activity.title | cut:' '}}"
+                                tabindex="-1" aria-labelledby="modal-label-{{activity.id}}-{{activity.title | cut:' '}}"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                id="modal-label-{{activity.id}}-{{activity.title | cut:' '}}">
+                                                <h4 class="text-black text-uppercase fw-bold">{{activity.title}}</h4>
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-start">{{activity.caption|linebreaksbr}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    <!-- Button trigger modal -->
+
+                </div>
+            </div>
+
+            <!-- Restaurants -->
+            {% if restaurants.all %}
+            <h3 class="fw-bolder text-uppercase">Restaurants of {{name}}</h3>
+            {% endif %}
+            <div id="restaurants" class="text-center mt-3">
+
+                <div class="row">
+                    {% for restaurant in restaurants.all %}
+                    <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
+                        <div class="card text-light p-0" id="{{restaurant.R_name | cut:' '}}">
+                            <img src="{{restaurant.image.url}}" alt="{{restaurant.R_name | cut:' '}}"
+                                class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase fw-bold text-start">{{restaurant.R_name}}</h5>
+                                <p class="card-text text-start">{{restaurant.caption|linebreaksbr}}</p>
+                            </div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
+                                data-bs-target="#modal-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}">
+                                See More
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}"
+                                tabindex="-1"
+                                aria-labelledby="modal-label-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                id="modal-label-{{restaurant.id}}-{{restaurant.R_name | cut:' '}}">
+                                                <h4 class="text-black text-uppercase fw-bold">{{restaurant.R_name}}</h4>
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-start">{{restaurant.caption|linebreaksbr}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    <!-- Button trigger modal -->
+
+                </div>
+            </div>
+
+            <!-- Hotels -->
+            {% if hotels.all %}
+            <h3 class="fw-bolder text-uppercase">Hotels in {{name}}</h3>
+            {% endif %}
+            <div id="hotels" class="text-center mt-3">
+
+                <div class="row">
+                    {% for hotel in hotels.all %}
+                    <div class="column col-sm-1 col-md-1 col-lg-3 col-xl-4">
+                        <div class="card text-light p-0" id="{{hotel.H_name | cut:' '}}">
+                            <img src="{{hotel.image.url}}" alt="{{hotel.H_name}}" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title text-uppercase fw-bold text-start">{{hotel.H_name}}</h5>
+                                <p class="card-text text-start">{{hotel.caption|linebreaksbr}}</p>
+                            </div>
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-primary ms-5 me-5 mb-3" data-bs-toggle="modal"
+                                data-bs-target="#modal-{{hotel.id}}-{{hotel.H_name | cut:' '}}">
+                                See More
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modal-{{hotel.id}}-{{hotel.H_name | cut:' '}}" tabindex="-1"
+                                aria-labelledby="modal-label-{{hotel.id}}-{{hotel.H_name | cut:' '}}"
+                                aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title"
+                                                id="modal-label-{{hotel.id}}-{{hotel.H_name | cut:' '}}">
+                                                <h4 class="text-black text-uppercase fw-bold">{{hotel.H_name}}</h4>
+                                            </h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-start">{{hotel.caption|linebreaksbr}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    {% endfor %}
+                    <!-- Button trigger modal -->
+
+                </div>
+            </div>
+
+            <h3 class="fw-bolder text-uppercase mt-3">{{name}} on map</h3>
+
+            <div class="card mt-3" id="map-card">
+                <div class="card-body">
+                    <iframe id="google-map" class="card-img-top" src="{{mapSrc}}" allowfullscreen loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+            </div>
+
+
+        </div>
+</section>
+
+<script>
+    const description = document.querySelector('.description');
+    const seeMoreLink = document.querySelector('.see-more-link');
+    const maxLength = 260;
+
+    if (description.innerHTML.length > maxLength) {
+        const shortDescription = description.innerHTML.slice(0, maxLength) + '... ';
+        const fullDescription = description.innerHTML
+        description.innerHTML = shortDescription;
+
+        seeMoreLink.addEventListener('click', () => {
+            if (description.innerHTML === shortDescription) {
+                description.innerHTML = fullDescription.replace('\r\n','<br>');
+                seeMoreLink.innerHTML = 'See Less';
+            } else {
+                description.innerHTML = shortDescription.replace('\r\n','<br>');
+                seeMoreLink.innerHTML = 'See More';
+            }
+        });
+    } else {
+        seeMoreLink.remove();
+    }
+</script>
 {% endblock content %}

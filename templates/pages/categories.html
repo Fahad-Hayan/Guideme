@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static%}
+{% block content %}
+<div class="safe-area container">
+    <div class="row">
+        {% for city in cities %}
+        <div class="column col-md-2 col-sm-2">
+            <div class="card text-light mt-3 p-0" id="{{city.name}}">
+                <a href="countries/{{city.country}}/{{city.id}}">
+                    <img src="{{city.image.url}}" alt="{{city.name}}" class="card-img-top">
+                    <div class="card-body">
+                        <div class="badge-container">
+                            <div class="badge">{{city.category}} Tourism</div>
+                        </div>
+                        <h4 class="card-title">{{city.name}} <sub>{{city.country}}</sub></h4>
+                        <p class="card-text">{{city.caption}}</p>
+                        <p id="exchange-text">USD exchange rate: ${{city.exchangeRate}}</p>
+                        <p id="rating-text"><img src="{% static 'img/Icons/star-filled.svg' %}" id="star-icon"
+                                class="d-inline">
+                            {{city.rating}}</p>
+                    </div>
+                </a>
+                {% if user.is_authenticated %}
+                {% if city in user.wishlist.cities.all %}
+                <form action="{% url 'wishlist_add_remove' city.id %}" method="POST" target="wishlist-iframe">
+                    {% csrf_token %}
+                    <button type="submit" id="favorite-btn" class="wishlist-btn"><img class="{{city.name}}F-icon"
+                            src="{% static 'img/Icons/Favorite-filled.svg' %}"></b>
+                </form>
+
+                {% else %}
+                <form action="{% url 'wishlist_add_remove' city.id %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" id="favorite-btn" class="wishlist-btn"><img class="{{city.name}}F-icon"
+                            src="{% static 'img/Icons/Favorite-outlined.svg' %}"></button>
+                </form>
+                {% endif %}
+                {% else %}
+                <a href="{% url 'signin' %}" id="favorite-btn" class="wishlist-btn"><img class="{{city.name}}F-icon"
+                        src="{% static 'img/Icons/Favorite-outlined.svg' %}"></a>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+
+
+
+{% endblock content %}

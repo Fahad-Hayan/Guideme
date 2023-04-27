@@ -26,7 +26,7 @@
     <div class="px-5 my-3">
         <!--Countries-->
         <div class="heading-link mx-2 mt-3">
-            <h3><a href="countries" class="text-decoration-underline">Countries</a></h3>
+            <h3><a href="countries" class="text-decoration-underline text-primary">Countries</a></h3>
         </div>
         <div class="owl-carousel">
             {% for country in Countries %}
@@ -43,7 +43,7 @@
         <hr>
         <!--Cities Cards-->
         <div class="heading-link mx-2 mt-3">
-            <h3><a href="#" class="text-decoration-underline">Most Rated Cities</a></h3>
+            <h3><p>Top 10 of Most Rated Cities</p></h3>
         </div>
         <div class="owl-carousel">
             {% for city in mostRated %}
@@ -81,16 +81,13 @@
                 <a href="{% url 'signin' %}" id="favorite-btn" class="wishlist-btn"><img
                     class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></a>
                 {% endif %}
-
-                <!-- <button type="button" id="favorite-btn" class="wishlist-btn" data-city-id="{{ city.id }}"> <img
-                        class="{{city.name}}F-icon" src="{% static 'img/Icons/Favorite-outlined.svg' %}"></button> -->
             </div>
 
             {% endfor %}
         </div>
         {% for category in categories %}
         <div class="heading-link mx-2 mt-3">
-            <h3><a href="#" class="text-decoration-underline">{{category}} Tourism</a></h3>
+            <h3><a href="categories/{{category}}" class="text-decoration-underline text-primary">{{category}} Tourism</a></h3>
         </div>
 
         <!-- <div class="mx-1 mt-3 clearfix">

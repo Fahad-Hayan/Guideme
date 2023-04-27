@@ -26,8 +26,8 @@ from django.contrib.auth.forms import PasswordChangeForm
 
 def home(request):
     return render(request, 'pages/home.html',{
-        'cities' : City.objects.all().exclude(category='Not Specified')[:10],
-        'categories':Category.objects.all().exclude(type = 'Not Specified'),
+        'cities' : City.objects.all(),
+        'categories':Category.objects.all(),
         'Countries' : Country.objects.all()[:10],
         'mostRated' : City.objects.order_by('-rating')[:10],
     })
@@ -215,6 +215,10 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect(reverse('signin'))
+
+def categories(request, category):
+    cities = City.objects.filter(category=category)
+    return render(request, 'pages/categories.html', {'cities': cities})
 
 def details(request, countryName , cityId):
     cityInfo = City.objects.get(id=cityId)

@@ -25,6 +25,7 @@ def validate_max_length(value):
 
 class Country(models.Model):
     name = models.CharField(max_length=16, verbose_name='Country Name', unique= True)
+    description = models.TextField(null = True, blank = False, verbose_name='Description', validators=[validate_min_length,validate_max_length], help_text='Description length must be between 40 and 2000 characters')
     image = models.ImageField(upload_to='images/%y/%m/%d', default='images/default/defaultImage.jpg', verbose_name='Photo')
     activeState = models.BooleanField(default=True, verbose_name='Active State')
     class Meta:
