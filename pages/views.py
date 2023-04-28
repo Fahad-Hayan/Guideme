@@ -167,6 +167,7 @@ def signup(request):
         myuser = User.objects.create_user(username, email, password)
         myuser.first_name = firstname
         myuser.last_name = lastname
+        Wishlist.objects.create(user=myuser)
         # myuser.is_active = False
         myuser.is_active = True
         myuser.save()

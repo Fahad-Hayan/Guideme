@@ -15,15 +15,15 @@
                 <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Home</a></li>
                 <li class="nav-item"><a href="{% url 'wishlist' %}" class="nav-link">Wishlist</a></li>
                 <li class="nav-item"><a href="{% url 'about' %}" class="nav-link">About</a></li>
-                    <form class="col-8" action="{% url 'explore' %}" method="get" id="filter-form">
-                        <div class="input-group">
-                            <input type="text" name="searchbar" id="searchbar" class="form-control"
-                                placeholder="What are you searching for?">
-                            <span class="input-group-text" id="basic-addon1">
-                                <input type="submit" class="btn text-white p-0" value="Search">
-                            </span>
-                        </div>
-                    </form><br>
+                <form class="col-8" action="{% url 'explore' %}" method="get" id="filter-form">
+                    <div class="input-group">
+                        <input type="text" name="searchbar" id="searchbar" class="form-control"
+                            placeholder="What are you searching for?">
+                        <span class="input-group-text" id="basic-addon1">
+                            <input type="submit" class="btn text-white p-0" value="Search">
+                        </span>
+                    </div>
+                </form><br>
                 {% if user.is_authenticated %}
                 <div class="nav-link" id="login-link">
                     <li class="nav-item dropdown">
@@ -39,7 +39,10 @@
                 </div>
 
                 {% else %}
-                <li class="nav-item"><a href="{% url 'signin' %}" class="nav-link text-light">Sign in</a></li>
+                <div class="nav-link" id="login-link">
+                    <li class="nav-item"><a href="{% url 'signin' %}" class="nav-link text-light">Sign in</a></li>
+                </div>
+
                 {% endif %}
             </ul>
         </div>
